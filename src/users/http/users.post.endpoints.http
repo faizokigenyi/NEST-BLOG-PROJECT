@@ -1,0 +1,9 @@
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "firstName": "Faizo Kigenyi",
+    "lastName": "Billion",
+    "email": "faizokigenyi@gmail.com",
+    "password": "Aero4321@"
+}
