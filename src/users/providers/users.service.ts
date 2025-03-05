@@ -9,13 +9,11 @@ import { CreateUserDto } from '../dtos/create-user.dto';
 @Injectable()
 export class UsersService {
   constructor(
-    //  injecting the user repository
+    /**
+     * injecting the user repository
+     * */
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
-
-    // injecting the Auth service
-    // @Inject(forwardRef(() => AuthService))
-    // private readonly authService: AuthService,
   ) {}
 
   public async createUser(createUserDto: CreateUserDto) {
@@ -29,7 +27,10 @@ export class UsersService {
     newUser = await this.usersRepository.save(newUser);
     return newUser;
   }
-
+  /**
+   * This is a method to find All users
+   *getUsers
+   * */
   public findAll(
     getUserParamDto: GetUsersParamDto,
     limit: number,

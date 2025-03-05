@@ -1,5 +1,1 @@
-
-
-export class GetUsersParamDto {
-
-}
+export class GetUsersParamDto {}
