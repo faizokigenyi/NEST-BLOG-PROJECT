@@ -10,7 +10,7 @@ export class User {
     length: 96,
     nullable: false,
   })
-  firstName: string;s
+  firstName: string;
 
   @Column({
     type: 'varchar',
