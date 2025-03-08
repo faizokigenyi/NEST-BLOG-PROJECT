@@ -7,9 +7,6 @@ import { Post } from './post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MetaOption } from 'src/meta-options/meta-option.entity';
 
-/**
- * This is the service for the posts
- */
 @Injectable()
 export class PostsService {
   constructor(
@@ -36,20 +33,16 @@ export class PostsService {
    */
   public async create(createPostDto: CreatePostDto) {
     // Create the metaOptions first if they exist
-    const metaOptions = createPostDto.metaOptions
+    let metaOptions = createPostDto.metaOptions
       ? this.metaOptionsRepository.create(createPostDto.metaOptions)
       : null;
-
-    /**
-     * If metaOptions exist, save them to the database
-     */
 
     if (metaOptions) {
       await this.metaOptionsRepository.save(metaOptions);
     }
 
     // Create the post
-    const post = this.postsRepository.create({
+    let post = this.postsRepository.create({
       ...createPostDto,
     });
 
@@ -61,17 +54,20 @@ export class PostsService {
     return await this.postsRepository.save(post);
   }
 
-  /**
-   * Method to find all posts
-   */
   public findAll(userId: string) {
-    /**
-     * Find user by id
-     *  */
-    const user = this.usersService.findOne(userId);
+    const user = this.usersService.findOneById(userId);
+
     return [
-      { user: user, title: 'Test title', Content: 'Test Content' },
-      { user: user, title: 'Test title 2', Content: 'Test Content 2' },
+      {
+        user: user,
+        title: 'Test Tile',
+        content: 'Test Content',
+      },
+      {
+        user: user,
+        title: 'Test Tile 2',
+        content: 'Test Content 2',
+      },
     ];
   }
 }

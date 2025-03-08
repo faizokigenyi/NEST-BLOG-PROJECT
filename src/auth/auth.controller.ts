@@ -6,8 +6,5 @@ export class AuthController {
   constructor(
     // injecting the auth service
     private readonly authService: AuthService,
-  ) {
-
-    
-  }
+  ) {}
 }

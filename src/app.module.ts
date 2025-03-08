@@ -1,15 +1,16 @@
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
-import { MetaOptionsModule } from './meta-options/meta-options.module';
-import { Module } from '@nestjs/common';
-import { PostsModule } from './posts/posts.module';
-import { TagsModule } from './tags/tags.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { AppController } from "./app.controller";
+import { AppService } from "./app.service";
+import { AuthModule } from "./auth/auth.module";
+import { MetaOptionsModule } from "./meta-options/meta-options.module";
+import { Module } from "@nestjs/common";
+import { PostsModule } from "./posts/posts.module";
+import { TagsModule } from "./tags/tags.module";
+import { TypeOrmModule } from "@nestjs/typeorm";
 /**
  * Importing Entities
  * */
-import { UsersModule } from './users/users.module';
+import { UsersModule } from "./users/users.module";
+
 
 @Module({
   imports: [
@@ -20,15 +21,15 @@ import { UsersModule } from './users/users.module';
       imports: [],
       inject: [],
       useFactory: () => ({
-        type: 'postgres',
-        // entities: [User],
+        type: "postgres",
+        // entities: [User,Post],
         synchronize: true,
         port: 5432,
-        username: 'postgres',
-        password: '1234',
-        host: 'localhost',
+        username: "postgres",
+        password: "1234",
+        host: "localhost",
         autoLoadEntities: true,
-        database: 'nestjs-blog',
+        database: "nestjs-blog",
       }),
     }),
     TagsModule,

@@ -5,15 +5,15 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from 'typeorm';
+} from "typeorm";
 
 @Entity()
 export class Tag {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column({
-    type: 'varchar',
+    type: "varchar",
     length: 256,
     nullable: false,
     unique: true,
@@ -21,40 +21,38 @@ export class Tag {
   name: string;
 
   @Column({
-    type: 'varchar',
-    length: 512,
+    type: "varchar",
+    length: 256,
     nullable: false,
     unique: true,
   })
   slug: string;
 
   @Column({
-    type: 'text',
+    type: "text",
     nullable: true,
   })
   description: string;
 
   @Column({
-    type: 'text',
+    type: "text",
     nullable: true,
   })
   schema: string;
 
   @Column({
-    type: 'varchar',
+    type: "varchar",
     length: 1024,
     nullable: true,
   })
-  featuredImage: string;
+  featuredImageUrl?: string;
 
-  // https://orkhan.gitbook.io/typeorm/docs/decorator-reference
   @CreateDateColumn()
   createDate: Date;
 
   @UpdateDateColumn()
   updateDate: Date;
 
-  // Add this decorartor and column enables soft delete
   @DeleteDateColumn()
   deletedAt: Date;
 }

@@ -9,14 +9,7 @@ export class AuthService {
     private readonly usersService: UsersService,
   ) {}
 
-  public login(email: string, password: string, id: string) {
-    // check if user exists in db
-    // login
-    // token
 
-    const user = this.usersService.findOne('1234');
-    return 'SAMPLE TOKEN';
-  }
 
   public isAuth() {
     return true;

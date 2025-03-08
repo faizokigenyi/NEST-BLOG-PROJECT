@@ -1,6 +1,7 @@
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -18,7 +19,7 @@ export class MetaOption {
   metaValue: string;
 
   @CreateDateColumn()
-  createDatedAt: Date;
+  createDate: Date;
 
   @UpdateDateColumn()
   updateDate: Date;
