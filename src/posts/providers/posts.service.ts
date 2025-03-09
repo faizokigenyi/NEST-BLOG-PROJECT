@@ -1,11 +1,11 @@
-import { CreatePostDto } from '../dtos/create-post.dto';
-import { Injectable } from '@nestjs/common';
-import { MetaOptionsService } from 'src/meta-options/providers/meta-options.service';
-import { UsersService } from 'src/users/providers/users.service';
-import { Repository } from 'typeorm';
-import { Post } from './post.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { MetaOption } from 'src/meta-options/meta-option.entity';
+import { CreatePostDto } from "../dtos/create-post.dto";
+import { Injectable } from "@nestjs/common";
+import { MetaOptionsService } from "src/meta-options/providers/meta-options.service";
+import { UsersService } from "src/users/providers/users.service";
+import { Repository } from "typeorm";
+import { Post } from "./post.entity";
+import { InjectRepository } from "@nestjs/typeorm";
+import { MetaOption } from "src/meta-options/meta-option.entity";
 
 @Injectable()
 export class PostsService {
@@ -33,23 +33,25 @@ export class PostsService {
    */
   public async create(createPostDto: CreatePostDto) {
     // Create the metaOptions first if they exist
-    let metaOptions = createPostDto.metaOptions
-      ? this.metaOptionsRepository.create(createPostDto.metaOptions)
-      : null;
+    // let metaOptions = createPostDto.metaOptions
+    //   ? this.metaOptionsRepository.create(createPostDto.metaOptions)
+    //   : null;
 
-    if (metaOptions) {
-      await this.metaOptionsRepository.save(metaOptions);
-    }
+    // if (metaOptions) {
+    //   await this.metaOptionsRepository.save(metaOptions);
+    // }
 
     // Create the post
-    let post = this.postsRepository.create({
-      ...createPostDto,
-    });
+
+    /**
+     * On insertion the metaoptions will be added to the post
+     */
+    let post = this.postsRepository.create({ ...createPostDto });
 
     // If meta options exist add them to post
-    if (metaOptions) {
-      post.metaOptions = metaOptions;
-    }
+    // if (metaOptions) {
+    //   post.metaOptions = metaOptions;
+    // }
 
     return await this.postsRepository.save(post);
   }
@@ -57,17 +59,23 @@ export class PostsService {
   public findAll(userId: string) {
     const user = this.usersService.findOneById(userId);
 
-    return [
-      {
-        user: user,
-        title: 'Test Tile',
-        content: 'Test Content',
+    let posts = this.postsRepository.find({
+      relations: {
+        metaOptions: true,
       },
-      {
-        user: user,
-        title: 'Test Tile 2',
-        content: 'Test Content 2',
-      },
-    ];
+    });
+
+    return posts;
+  }
+
+  public async delete(id: number) {
+    // find the post
+    let post = await this.postsRepository.findOneBy({id});
+    // delete the post
+    await this.postsRepository.delete(id);
+    // delete the meta options
+    await this.metaOptionsRepository.delete(post.metaOptions.id);
+    // confirmation
+    return {deleted:true, id}
   }
 }
